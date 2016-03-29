@@ -1,0 +1,1 @@
+Basic MEAN stack directory structure
