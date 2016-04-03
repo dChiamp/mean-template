@@ -1,13 +1,21 @@
 var gulp = require('gulp'),     
-    sass = require('gulp-ruby-sass') 
-    notify = require("gulp-notify") 
-    bower = require('gulp-bower');
+    sass = require('gulp-sass') 
 
-var config = {
-     sassPath: './dist/app/public/stylesheets/main.scss',
-     bowerDir: './bower_components' 
-}
-
-gulp.task('default', function() {
-  console.log('I am the default task. Hear me roar');
+gulp.task('test', function() {
+  console.log('roar i am default gulp');
 });
+
+
+gulp.task('styles', function() {
+    gulp.src('./dist/app/public/sass/**/*.scss')
+        .pipe(sass().on('error', sass.logError))
+        .pipe(gulp.dest('./dist/app/public/stylesheets'));
+});
+
+// Rerun the task when a file chang
+
+ gulp.task('default', function() {
+     gulp.watch('./dist/app/public/sass/**/*.scss', ['styles', 'test']); 
+});
+
+//   gulp.task('default', ['test', 'styles']);
