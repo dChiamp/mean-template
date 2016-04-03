@@ -5,8 +5,9 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
-var routes = require('./routes/index');
-var users = require('./routes/users');
+var routes = require('./config/routes');
+// var routes = require('./routes/index');
+// var users = require('./routes/users');
 
 var app = express();
 
@@ -22,8 +23,18 @@ app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
-app.use('/', routes);
-app.use('/users', users);
+
+app.use(routes);
+// app.use('/', routes);
+// app.use('/users', users);
+
+// error handlers
+// angular routes
+app.get('*', function(req, res){
+  // res.render('index');
+  console.log("HIT!")
+  res.sendFile(__dirname + '/views/index.html')
+})
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -32,7 +43,7 @@ app.use(function(req, res, next) {
   next(err);
 });
 
-// error handlers
+
 
 // development error handler
 // will print stacktrace
